@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>hello world!</title>
+    		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+		<style>
+			h1{
+				text-align: center;
+			}
+			p {
+				text-align: center;
+			}
+		</style>
+
+	</head>
+	<body>
+		<h1 class="text-primary">Welcome to my website!</h1>
+		<p> In this website, I'll try to show cat images using TheCatAPI </p>
+		<div class="container text-center">
+			<div class="row">
+				<div class="col border p-3">
+					<img id= "custom-image1" style="width:200px" src ="">
+				</div>
+				<div class="col border p-3">
+					<img id= "custom-image2" style="width:200px" src ="">
+				</div>
+				<div class="col border p-3">
+					<img id= "custom-image3" style="width:200px" src ="">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col border p-3">
+					<img id= "custom-image4" style="width:200px" src ="">
+				</div>
+				<div class="col border p-3">
+					<img id= "custom-image5" style="width:200px" src ="">
+				</div>
+				<div class="col border p-3">
+					<img id= "custom-image6" style="width:200px" src ="">
+				</div>
+			</div>
+				<div class="row">
+				<div class="col border p-3">
+					<img id= "custom-image7" style="width:200px" src ="">
+				</div>
+				<div class="col border p-3">
+					<img id= "custom-image8" style="width:200px" src ="">
+				</div>
+				<div class="col border p-3">
+					<img id= "custom-image9" style="width:200px" src ="">
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+	</body>
+	<script>
+		let data;
+		const IMG_COUNTER = 9;
+		async function fetchUserData() {
+  		try {
+    		const response = await fetch('https://api.thecatapi.com/v1/images/search?limit=10');
+    
+    		if (!response.ok) {
+      			throw new Error(`HTTP error! Status: ${response.status}`);
+    		}
+    
+		
+   		data = await response.json();
+    		console.log(data);
+		const myCat = data[0];
+
+			for(let i = 0; i < IMG_COUNTER; i ++){
+				document.getElementById(`custom-image${i + 1}`).src = data[i].url;
+			}
+
+  		} catch (error) {
+    			console.error('Failed to fetch data:', error);
+  			}
+		}
+		fetchUserData();
+		
+		for(let i = 1; i < (IMG_COUNTER + 1); i++) {
+			const button = document.getElementById(`custom-image${i}`);
+
+			button.addEventListener('click', function() {
+				if(this.style.width == "400px") {
+					this.style.width = "200px";
+				}
+				else {
+					this.style.width = "400px";
+				}
+			});
+
+		}
+		
+	</script>
+</html>
